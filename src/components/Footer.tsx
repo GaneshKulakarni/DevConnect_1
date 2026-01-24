@@ -466,26 +466,37 @@ export default function Footer() {
               </div>
               
               <div className="flex flex-wrap gap-4 text-sm group/links">
-                {["Privacy", "Terms", "Cookies", "Security", "Status", "Careers", "Docs"].map((item, i) => (
-                  <a
-                    key={i}
-                    href={item === "Docs" ? "/docs" : "#"}
-                    className={`transition-all duration-300 relative group/link overflow-hidden ${
-                      isDark 
-                        ? 'text-gray-400 hover:text-cyan-300' 
-                        : 'text-gray-600 hover:text-blue-600'
-                    }`}
-                    style={{ animationDelay: `${i * 0.1}s` }}
-                  >
-                    <span className="relative z-10 group-hover/link:translate-x-1 transition-transform duration-300">
-                      {item}
-                    </span>
-                    <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover/link:w-full transition-all duration-300 ${
-                      isDark ? 'bg-cyan-400' : 'bg-blue-500'
-                    }`}></span>
-                  </a>
-                ))}
-              </div>
+  {[
+    { label: "Privacy", path: "/privacy-policy" },
+    { label: "Terms", path: "/terms" },
+    { label: "Cookies", path: "#" },
+    { label: "Security", path: "#" },
+    { label: "Status", path: "#" },
+    { label: "Careers", path: "#" },
+    { label: "Docs", path: "/docs" },
+  ].map((item, i) => (
+    <Link
+      key={i}
+      to={item.path}
+      className={`transition-all duration-300 relative group/link overflow-hidden ${
+        isDark 
+          ? 'text-gray-400 hover:text-cyan-300' 
+          : 'text-gray-600 hover:text-blue-600'
+      }`}
+      style={{ animationDelay: `${i * 0.1}s` }}
+    >
+      <span className="relative z-10 group-hover/link:translate-x-1 transition-transform duration-300">
+        {item.label}
+      </span>
+      <span
+        className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover/link:w-full transition-all duration-300 ${
+          isDark ? 'bg-cyan-400' : 'bg-blue-500'
+        }`}
+      ></span>
+    </Link>
+  ))}
+</div>
+
             </div>
           </div>
         </div>
