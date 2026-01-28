@@ -1,6 +1,6 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../supabase-client";
+import { supabase, isBackendAvailable } from "../supabase-client";
 import { Lock } from "lucide-react";
 import { showSuccess, showError } from "../utils/toast";
 
@@ -13,6 +13,10 @@ export default function ResetPasswordPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isBackendAvailable || !supabase) {
+      showError("Password reset is unavailable in demo mode or without backend configuration.");
+      return;
+    }
     // Check if we have a valid session from the reset link
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
@@ -39,6 +43,10 @@ export default function ResetPasswordPage() {
     setLoading(true);
 
     try {
+      if (!isBackendAvailable || !supabase) {
+        setError("Password reset is unavailable in demo mode or without backend configuration.");
+        return;
+      }
       const { error } = await supabase.auth.updateUser({
         password: password,
       });
